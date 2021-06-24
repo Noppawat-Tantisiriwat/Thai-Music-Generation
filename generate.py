@@ -50,8 +50,7 @@ def main(num_generate, model_path):
     vae = tf.keras.models.load_model(model_path)
     for i in range(num_generate):
         wave = generate(vae)
-        # sf.write(f"generated_no.{i+1:2d}.wav", wave, samplerate=22050)
-        sf.write(f"example_no.{i+3:02d}.wav", wave, samplerate=22050)
+        sf.write(f"generation_no.{i+1:02d}.wav", wave, samplerate=22050)
 
 
 
