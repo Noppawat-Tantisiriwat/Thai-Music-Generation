@@ -5,6 +5,7 @@ import pickle as p
 import numpy as np
 import argparse
 import os
+from tqdm.auto import tqdm
 
 parser = argparse.ArgumentParser()
 
@@ -12,10 +13,13 @@ parser.add_argument("-n", "--num_generate", type=int, default=10, help="number o
 
 parser.add_argument("-m", "--model", type=str, default=None, help="enter vae model path")
 
+parser.add_argument("-o", "--output", type=str, default=os.getcwd(), help="enter vae model path")
+
 args = parser.parse_args()
 
 num_generate = args.num_generate
 model_path = args.model
+output = args.output
 
 
 
@@ -46,14 +50,15 @@ def generate(model):
     wave = librosa.griffinlim(spectrogram, hop_length=256, win_length=510)
     return wave
 
-def main(num_generate, model_path):
+def main(num_generate, model_path, output):
+    os.mkdir(output)
     vae = tf.keras.models.load_model(model_path)
-    for i in range(num_generate):
+    for i in tqdm(range(num_generate)):
         wave = generate(vae)
-        sf.write(f"generation_no.{i+1:02d}.wav", wave, samplerate=22050)
+        sf.write(os.path.join(output, f"generation_no.{i+1:02d}.wav"), wave, samplerate=22050)
 
 
 
 
 if __name__ == '__main__':
-    main(num_generate, model_path)
+    main(num_generate, model_path, output)
