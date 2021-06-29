@@ -1,6 +1,0 @@
-tensorflow=2.4.0
-streamlit
-soundfile
-librosa
-numpy
-pickle
