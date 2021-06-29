@@ -17,6 +17,11 @@ import streamlit as st
 import soundfile as sf
 
 
+on_rtd = os.environ.get('READTHEDOCS') == 'True'
+if on_rtd:
+    html_theme = 'default'
+else:
+    html_theme = 'nature'
 MODEL_WEIRDO = "10QZqFAFkD5rRwr-sXPHttLxsRgfZ6hjH"
 
 # MODEL_CNN = "https://drive.google.com/drive/folders/1WgKXGMJgaMgBSDNLPFmtUhIX3j-Ywcoa?usp=sharing"
