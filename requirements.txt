@@ -1,5 +1,4 @@
 tensorflow-cpu==2.5.0
 streamlit==0.83.0
-soundfile==0.10.3.post1
 librosa==0.8.0
 numpy
