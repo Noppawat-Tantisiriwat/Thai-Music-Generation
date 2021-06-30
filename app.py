@@ -1,17 +1,8 @@
-from typing import List
 from tensorflow import keras
 import librosa
-from tensorflow.keras import Model
-from tensorflow.keras.layers import Input, Conv1D, LayerNormalization, \
-    Flatten, Dense, Reshape, Conv1DTranspose, Layer
-from tensorflow.keras import backend as K
-from tensorflow.keras.optimizers import Adam
 import tensorflow as tf
-from tqdm.auto import tqdm
 import numpy as np
-import datetime, os
 import pickle as p
-import urllib.request
 from google_drive_downloader import GoogleDriveDownloader as gdd
 import streamlit as st
 import soundfile as sf
