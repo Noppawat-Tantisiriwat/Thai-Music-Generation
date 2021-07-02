@@ -8,13 +8,14 @@ import streamlit as st
 import soundfile as sf
 
 
-MODEL_WEIRDO = "10QZqFAFkD5rRwr-sXPHttLxsRgfZ6hjH"
+MODEL_BASELINE = "1f3ObpDvBRcn9FxrmQgFwc-RKbjftHMLt"
 
 # MODEL_CNN = "https://drive.google.com/drive/folders/1WgKXGMJgaMgBSDNLPFmtUhIX3j-Ywcoa?usp=sharing"
 
 # MODEL_CNN_LSTM = "https://drive.google.com/drive/folders/15MLS-UF-njBEYx2Qg1EoSzSZWJbaAOoy?usp=sharing"
-gdd.download_file_from_google_drive(file_id=MODEL_WEIRDO,
-                                    dest_path="weirdo/variables/variables.data-00000-of-00001"
+gdd.download_file_from_google_drive(file_id=MODEL_BASELINE,
+                                    dest_path="./model",
+                                    unzip=True
                                     )
 
 
@@ -23,7 +24,7 @@ gdd.download_file_from_google_drive(file_id=MODEL_WEIRDO,
 
 # cnn = keras.models.load_model("cnn")
 # cnn_lstm = keras.models.load_model("cnn_lstm")
-weirdo = keras.models.load_model("weirdo")
+baseline = keras.models.load_model("Baseline")
 
 min_max = "1oGk9dnPOSCPUXskTTs6uWElnSZipCgk6"
 
@@ -51,7 +52,7 @@ def denormalize(array, min_original, max_original):
     return array
 
 def generate(model):
-    eps = tf.random.normal([1, 1024])
+    eps = tf.random.normal([1, 256])
     log_spectrogram = model.decoder(eps)
     log_spectrogram = tf.squeeze(log_spectrogram).numpy().T
     log_denorm = denormalize(log_spectrogram, min_original, max_original)
@@ -63,7 +64,7 @@ def generate(model):
 st.title("Thai Music (Ranat Ek) Generatation with VAE")
 st.sidebar.write("It's time to generate!!!")
 if st.sidebar.button("Generate", help="press to generate music"):
-    wave = generate(weirdo)
+    wave = generate(baseline)
     sf.write("test.wav", wave, samplerate=22050)
     audio_file = open('test.wav', 'rb')
     audio_bytes = audio_file.read()
